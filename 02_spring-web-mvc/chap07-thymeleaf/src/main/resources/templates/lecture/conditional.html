@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>conditional</title>
+</head>
+<body>
+    <h1>제어문</h1>
+    <h2>if/else</h2>
+
+    <!-- 조건에 해당되면 -->
+    <p th:if="${ num > 0}">넘어온 값은 0보다 크다.</p>
+    <p th:if="${ num < 0}">넘어온 값은 0보다 작다.</p>
+    <!-- 조건에 해당되지 않으면 -->
+    <p th:unless="${ num > 0}">넘어온 값은 0보다 크지 않다.</p>
+    <p th:unless="${ num < 0}">넘어온 값은 0보다 작지 않다.</p>
+
+    <!-- th:block 활용 -->
+    <th:block th:if="${ str == '복숭아' }">
+        <p>복숭아 좋아요!!</p>
+        <p>복숭아 좋아요!!</p>
+        <p>복숭아 좋아요!!</p>
+    </th:block>
+    <th:block th:if="${ str == '샤인머스캣' }">
+        <p>샤인머스캣 좋아요!!</p>
+        <p>샤인머스캣 좋아요!!</p>
+        <p>샤인머스캣 좋아요!!</p>
+    </th:block>
+
+    <!--- and나 or를 사용해서 다중 조건 처리 -->
+    <p th:if="${ num > 0 and num <= 10 }">1부터 10사이의 양수</p>
+    <p th:if="${ str != null && str == '복숭아' }">복숭아 좋아요!!</p>
+
+    <!-- #strings라는 타임리프에서 제공하는 Utility Object 메소드에서 null 처리가 가능하다. -->
+    <p th:if="${ !#strings.isEmpty(str) and str == '복숭아' }">복숭아 좋아요!!</p>
+
+    <h2>switch/case</h2>
+    <th:block th:switch="${ str }">
+        <span th:case="멜론">멜론이 선택되었습니다.</span>
+        <span th:case="복숭아">복숭아가 선택되었습니다.</span>
+    </th:block>
+
+
+</body>
+</html>
