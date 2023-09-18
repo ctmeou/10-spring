@@ -29,6 +29,7 @@
     </table>
 
     <button onclick="sendJquery()">jQuery로 전송</button>
+    <button onclick="sendFetch()">fetch로 전송</button>
 
     <script>
 
@@ -41,8 +42,13 @@
 
             <!--4가지의 데이터를 객체로 작성(변수명을 키값으로 쓰겠다는 의미로 축약해서 작성)-->
             const userInfo = { nickname, age, email, registDate };
-            <!--위는 자바스크립트 객체이기 때문에 통신을 통해 보내야 하는 것은 JSON 문자열이기 때문에 stringify로 JSON 문자열로 passing 처리-->
-            const json = JSON.stringify(userInfo);
+            <!--위는 자바스크립트 객체이기 때문에 통신을 통해 보내야 하는 것은 JSON 문자열이기 때문에 stringify로 JSON 문자열로 passing 처리-->줌
+            const userInfoLIst = [userInfo, userInfo, userInfo];
+            //user가 여러 명일 경우
+            // user data 1명 전송
+            // const json = JSON.stringify(userInfo);
+            // user data 3명 배열로 전송
+            const json = JSON.stringify(userInfoLIst);
 
             console.log("userInfo", userInfo);
             console.log("json", json);
@@ -61,6 +67,86 @@
             });
 
       }
+
+        async function sendJquery() {
+
+            const nickname = document.querySelector("#nickname").value;
+            const age = document.querySelector("#age").value;
+            const email = document.querySelector("#email").value;
+            const registDate = document.querySelector("#registDate").value;
+
+            <!--4가지의 데이터를 객체로 작성(변수명을 키값으로 쓰겠다는 의미로 축약해서 작성)-->
+            const userInfo = {nickname, age, email, registDate};
+            <!--위는 자바스크립트 객체이기 때문에 통신을 통해 보내야 하는 것은 JSON 문자열이기 때문에 stringify로 JSON 문자열로 passing 처리-->
+            줌
+            const userInfoLIst = [userInfo, userInfo, userInfo];
+            //user가 여러 명일 경우
+            // user data 1명 전송
+            // const json = JSON.stringify(userInfo);
+            // user data 3명 배열로 전송
+            const json = JSON.stringify(userInfoLIst);
+
+            console.log("userInfo", userInfo);
+            console.log("json", json);
+
+            const response = await fetch('/fetch/json', {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json; charset=UTF-8'
+                },  //전송하려는 데이터를 헤더로 전달하고 content tpye으로 설정
+                body : json
+                    //josn을 요청 body에 넣음
+            });
+            //클라이언트가 서버에서 돌아오는 게 얼마가 걸릴지 모름(통신 상황에 따름)
+
+            const result = await response.text();
+            console.log(result);
+
+        }
+    </script>
+
+    <h1>JSON 데이터 서버 응답 테스트</h1>
+    <h3>테이블로 회원 정보 불러오기</h3>
+    <table class="userInfo"></table>
+
+    <button onclick="receiveJquery()">jQuery로 전송 후 응답 처리</button>
+    <button onclick="receiveFetch()">fetch로 전송 후 응답 처리</button>
+
+    <script>
+
+        function createTrString(user) {
+            //하나의 tr 문자로 만들어줌(백틱 이용)
+            return `
+            <tr>
+                <td>아이디 : ${ user.id }</td>
+                <td>닉네임 : ${ user.nickname }</td>
+                <td>나이 : ${ user.age }</td>
+                <td>이메일 : ${ user.email }</td>
+                <td>가입일 : ${ user.registDate }</td>
+            </tr>
+            `;
+        }
+
+        function receiveJquery() {
+            $.ajax({
+                url : '/jquery/json',
+                method : 'GET',
+                error : xhr => console.log(xhr),
+                success : responseJson => {
+                    const table = document.querySelector(".userInfo");
+                    table.innerHTML = responseJson.map(item => createTrString(item)).join('');
+                    //배열 대상으로 map 처리(map 배열 안에 있는 객체를 반복), 문자열이 join돼서 하나로 출력
+                }
+            });
+        }
+
+        async function receiveFetch() {
+            const response = await fetch('/fetch/json');
+            const responseJson = await response.json();
+            //rssponse 사용 시 await 붙여줘야 함
+            const table = document.querySelector(".userInfo");
+            table.innerHTML = responseJson.map(item => createTrString(item)).join('');
+        }
     </script>
 </body>
 </html>

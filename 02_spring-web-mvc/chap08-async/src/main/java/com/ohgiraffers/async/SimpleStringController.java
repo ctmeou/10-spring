@@ -18,10 +18,12 @@ public class SimpleStringController {
     @ResponseBody
     @GetMapping(value="/xmlhttprequest/simple-string")
     public String xmlhttprequestTest(@RequestParam String keyword) {
+                                    //RequestParam으로 데이터(keyword)를 꺼냄
 
         String responseText = "서버로 전달된 문자열은 " + keyword + "입니다.";
 
         return responseText;
+        //여기에 반환되는 문자를 view라고 해석했으나 @ResponseBody를 붙이면 반환 값이 응답 ResponseBody에 들어갈 데이터로 변경됨
 
     }
 

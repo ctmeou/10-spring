@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>regist</title>
+</head>
+<body>
+    <div th:include="common/header.html"></div>
+    <!--포함한다. replace 교체는 div를 대신해서 들어감-->
+
+    <h3>신규 메뉴 등록</h3>
+    <form action="/menu/regist" method="post">
+        <label>메뉴 이름 : </label><input type="text" name="name"><br>
+        <label>메뉴 가격 : </label><input type="number" name="price"><br>
+        <label>카테고리 코드</label>
+        <select name="categoryCode" id="categoryCode"></select><br>
+        <!--옵션에 아무것도 넣지 않은 것은 정적으로 고정되어 있는 옵션, 추가되거나 삭제되거나 수정되는 속성이라면 html 문서 내에 고정시켜두면 안됨, DB카데고리에 존재하는 걸 표현해야 하지, 그렇지 않으면 실행 안됨
+        카테고리가 변하지 않으면 정적으로 작성해도 되지만 그렇지 않으므로 비워둠-->
+        <label>판매 상태 : </label>
+        <select name="orderableStatus">
+            <option>Y</option>
+            <option>N</option>
+        </select><br>
+        <input type="submit">
+    </form>
+
+    <script>
+        fetch('/menu/category').then(res => res.json()).then(data => {
+            //get방식 통신이라 url만 요청해도 됨
+
+            const $categoryCode = document.querySelector("#categoryCode");
+
+            data.forEach(category => {
+                const $option = document.createElement('option');
+                $option.textContent = category.name;
+                $option.value = category.code;
+                $categoryCode.appendChild($option);
+            });
+        });
+    </script>
+</body>
+</html>
