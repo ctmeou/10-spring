@@ -1,7 +1,6 @@
 package com.ohgiraffers.sessionlogin.config;
 
 import com.ohgiraffers.sessionlogin.member.service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,7 +53,7 @@ public class SpringSecurityConfiguration {
                 .and()
                 /* 로그아웃 설정 */
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/member/loggout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                 .deleteCookies("JESSIONID")
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/")
