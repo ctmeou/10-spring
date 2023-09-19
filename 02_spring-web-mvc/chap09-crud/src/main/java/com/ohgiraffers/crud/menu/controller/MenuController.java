@@ -3,7 +3,8 @@ package com.ohgiraffers.crud.menu.controller;
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import com.ohgiraffers.crud.menu.model.service.MenuService;
-import org.apache.logging.log4j.message.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/menu")
 public class MenuController {
+
+    /* Logger 객체 생성 */
+    private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 
     private final MenuService menuService;
     private final MessageSource messageSource;
@@ -50,6 +54,14 @@ public class MenuController {
 
     @PostMapping("/regist")
     public String registMenu(@ModelAttribute MenuDTO newMenu, Locale locale, RedirectAttributes rttr) {
+
+        //System.out.println(newMenu); //프로그램 배포 시 이렇게 출력하는 것은 지양
+        logger.info("newMenu : {}", newMenu); //{} 전체적인 문장의 템플릿
+        logger.trace("locale : {}", locale); //가장 낮은 레벨
+        logger.debug("locale : {}", locale); //그 다음 낮은 레벨
+        logger.info("locale : {}", locale);
+        logger.warn("locale : {}", locale);
+        logger.error("locale : {}", locale);
 
         menuService.registNewMenu(newMenu);
 
