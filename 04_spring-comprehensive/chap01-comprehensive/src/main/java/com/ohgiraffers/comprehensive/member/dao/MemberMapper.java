@@ -12,4 +12,8 @@ public interface MemberMapper {
     int insertMember(MemberDTO member);
 
     int insertMemberRole();
+
+    int updateMember(MemberDTO modifyMember);
+
+    int deleteMember(MemberDTO member);
 }
