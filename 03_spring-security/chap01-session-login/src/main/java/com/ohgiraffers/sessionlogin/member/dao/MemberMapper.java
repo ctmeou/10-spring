@@ -9,5 +9,7 @@ public interface MemberMapper {
     MemberDTO findMemberById(String memberId);
     //memberId로 DB 조회
     //전달한 id를 기반으로 회원인지 일치 여부 확인
+    void registMember(MemberDTO member);
 
+    void addMemberAuthority();
 }
