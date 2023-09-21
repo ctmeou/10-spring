@@ -5,6 +5,31 @@
     <title>boardList</title>
 </head>
 <body>
+    <!--header 가질 수 있도록 처리-->
+    <div th:replace="common/header.html"></div>
+
+    <div align="center">
+        <h2>게시판</h2>
+        <table id="listArea" style="text-align: center">
+            <tr>
+                <th>글번호</th>
+                <th>카테고리</th>
+                <th>글제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>작성일</th>
+            </tr>
+            <!--tr을 boardList로 저장해놨고 그것을 반복 처리-->
+            <tr th:each="board : ${ boardList }">
+                <td th:text="${ board.no }"></td>
+                <td th:text="${ board.category.name }"></td>
+                <td th:text="${ board.title }"></td>
+                <td th:text="${ board.writer.nickname }"></td>
+                <td th:text="${ board.count }"></td>
+                <td th:text="${ board.createdDate }"></td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 </html>
