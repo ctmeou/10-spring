@@ -38,6 +38,8 @@ public class SecurityConfig {
                 /* 요청에 대한 권한 체크 */
                 .authorizeHttpRequests()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                //로그인 풀리지 않게 주석(로그인 하지 않고 게시판 메뉴 볼 수 있음)
+                //댓글로 board로 시작하기 때문에 회원만 작성할 수 있음
                 .antMatchers("/board/**", "/thumbnail/**", "/member/update", "/member/delete").hasRole("MEMBER")
                 /* 위에 서술 된 패턴 외의 요청은 인증 되지 않은 사용자도 요청 허가 */
                 .anyRequest().permitAll()

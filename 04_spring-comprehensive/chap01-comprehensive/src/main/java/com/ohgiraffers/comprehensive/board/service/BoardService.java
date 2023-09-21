@@ -2,10 +2,12 @@ package com.ohgiraffers.comprehensive.board.service;
 
 import com.ohgiraffers.comprehensive.board.dao.BoardMapper;
 import com.ohgiraffers.comprehensive.board.dto.BoardDTO;
+import com.ohgiraffers.comprehensive.board.dto.ReplyDTO;
 import com.ohgiraffers.comprehensive.common.paging.Pagenation;
 import com.ohgiraffers.comprehensive.common.paging.SelectCriteria;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@Transactional
 public class BoardService {
 
     private final BoardMapper boardMapper;
@@ -20,6 +23,7 @@ public class BoardService {
     public BoardService(BoardMapper boardMapper) {
         this.boardMapper = boardMapper;
     }
+
     public Map<String, Object> selectBoardList(Map<String, String> searchMap, int page) {
 
         /* 1. 전체 게시글 수 확인(검색어가 있는 경우 포함) => 페이징 처리를 위해 */
@@ -45,4 +49,27 @@ public class BoardService {
         return boardListAndPaging;
 
     }
+
+    public BoardDTO selectBoardDetail(Long no) {
+
+        /* 조회수 증가 로직 호출 */
+        boardMapper.incrementBoardCount(no);
+
+        /* 게시글 상세 내용 조회 후 리턴 */
+        return boardMapper.selectBoardDetail(no);
+
+    }
+
+    public void registReply(ReplyDTO registReply) {
+
+        boardMapper.insertReply(registReply);
+
+    }
+
+    public List<ReplyDTO> loadReply(ReplyDTO loadReply) {
+
+        return  boardMapper.selectReplyList(loadReply);
+
+    }
+
 }

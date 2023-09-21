@@ -19,7 +19,7 @@
           <!--result와 섞어 작성하면 error, 아래에 작성해줘야 함-->
           <association property="writer" resultMap="memberResultMap"/>
           <association property="category" resultMap="categoryResultMap"/>
-<!--          <collection property="replyList" resultMap="replyResultMap"/>-->
+         <collection property="replyList" resultMap="replyResultMap"/>
       </resultMap>
 
       <resultMap type="com.ohgiraffers.comprehensive.member.dto.MemberDTO" id="memberResultMap">
@@ -39,7 +39,7 @@
           <id property="code" column="CATEGORY_CODE"/>
           <result property="name" column="CATEGORY_NAME"/>
       </resultMap>
-    <!--
+
       <resultMap type="com.ohgiraffers.comprehensive.board.dto.ReplyDTO" id="replyResultMap">
           <id property="no" column="REPLY_NO"/>
           <result property="refBoardNo" column="REF_BOARD_NO"/>
@@ -47,6 +47,7 @@
           <result property="status" column="REPLY_STATUS"/>
           <result property="createdDate" column="R_CREATED_DATE"/>
 
+          <!--댓글 작성자도 같이 출력-->
           <association property="writer" javaType="com.ohgiraffers.comprehensive.member.dto.MemberDTO">
               <id property="memberNo" column="R_MEMBER_NO"/>
               <result property="memberId" column="MEMBER_ID"/>
@@ -60,7 +61,7 @@
               <result property="memberStatus" column="MEMBER_STATUS"/>
           </association>
       </resultMap>
-
+<!--
 
       <resultMap type="com.ohgiraffers.comprehensive.board.dto.BoardDTO" id="thumbnailBoardResultMap">
           <id property="no" column="BOARD_NO"/>
@@ -190,7 +191,7 @@
          ORDER BY 1 DESC
      </select>
 
-     <!--<update id="incrementBoardCount">
+     <update id="incrementBoardCount">
          UPDATE
              TBL_BOARD A
          SET A.BOARD_COUNT = A.BOARD_COUNT + 1
@@ -241,6 +242,7 @@
          )
      </insert>
 
+    <!--댓글 작성자와 내용 가져옴-->
      <select id="selectReplyList" resultMap="replyResultMap">
          SELECT
                 A.REPLY_NO
@@ -256,7 +258,7 @@
            AND A.REF_BOARD_NO = #{ refBoardNo }
          ORDER BY A.REPLY_NO
      </select>
-
+<!--
      <delete id="deleteReply">
          DELETE
          FROM TBL_REPLY A

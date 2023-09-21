@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @ToString
@@ -24,5 +25,6 @@ public class BoardDTO {
     private Date createdDate;       //작성일
     private Date modifiedDate;      //수정일
     private String status;          //삭제여부
+    private List<ReplyDTO> replyList;
 
 }
