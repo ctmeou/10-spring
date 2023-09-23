@@ -26,5 +26,6 @@ public class BoardDTO {
     private Date modifiedDate;      //수정일
     private String status;          //삭제여부
     private List<ReplyDTO> replyList;
+    private List<AttachmentDTO> attachmentList;
 
 }

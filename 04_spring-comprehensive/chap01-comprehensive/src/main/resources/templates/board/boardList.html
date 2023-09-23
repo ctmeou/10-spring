@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>boardList</title>
+    <script src="/js/event.js" type="text/javascript"></script>
 </head>
 <body>
     <!--header 가질 수 있도록 처리-->
@@ -114,6 +115,8 @@
             </select>
             <input type="search" id="searchValue" name="searchValue" th:value="${ paging.searchValue }">
             <button type="submit">검색하기</button>
+            <button type="button" id="writeBoard">작성하기</button>
+            <!--form 안에 button type을 생략하면 submit해서 button을 명시해줘야 함-->
         </form>
     </div>
 

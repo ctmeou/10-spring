@@ -138,6 +138,19 @@
     });
 
   }
+
+  /* 댓글 삭제 */
+  function removeReply(replyNo) {
+    fetch('/board/removeReply', {
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json; charset=UTF-8'
+      },
+      body : JSON.stringify({ no : replyNo })
+    })
+            .then(() => loadReply())
+            .catch(error => console.log(error));
+  }
 </script>
 
 </body>

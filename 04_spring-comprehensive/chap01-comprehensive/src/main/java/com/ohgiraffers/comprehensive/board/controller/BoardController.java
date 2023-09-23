@@ -92,4 +92,36 @@ public class BoardController {
 
     }
 
+    @PostMapping("/removeReply")
+    public ResponseEntity<String> removeReply(@RequestBody ReplyDTO removeReply) {
+
+        log.info("removeReply no : {}",removeReply.getNo());
+
+        boardService.removeReply(removeReply);
+
+        return ResponseEntity.ok("댓글 삭제 완료!");
+
+    }
+
+    //작성하기 누르면 페이지 이동하게
+    @GetMapping("/regist")
+    public String getRegistPage() {
+
+        return "board/boardRegist";
+
+    }
+
+    /* boardRegist.html과 BoardMapper.xml을 참조하여 게시글 삽입이 되도록 구현 */
+    @PostMapping("/regist")
+    public String registBoard(BoardDTO board, @AuthenticationPrincipal MemberDTO member) {
+
+        board.setWriter(member);
+        log.info("registBoard board : {}", board);
+
+        boardService.registBoard(board);
+
+        return "redirect:/board/list";
+
+    }
+
 }
